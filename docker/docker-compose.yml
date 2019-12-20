@@ -1,0 +1,38 @@
+version: "3.4"
+
+services:
+
+  my_app:
+    build:
+      context: ".."
+      dockerfile: "docker/source/Dockerfile"
+    volumes:
+     - "app_code:/app"
+
+  my_php:
+    build:
+      context: "./php"
+    hostname: "my-php"
+    volumes:
+     - "app_code:/app"
+    depends_on:
+     - "my_app"
+    environment:
+      PS1: "\\u@\\h:\\w\\$$ "
+
+  my_nginx:
+    build:
+      context: "./nginx"
+    hostname: "my-nginx"
+    ports:
+     - "4080:80"
+    volumes:
+     - "app_code:/app"
+    depends_on:
+     - "my_php"
+    environment:
+      PS1: "\\u@\\h:\\w\\$$ "
+
+volumes:
+  app_code:
+    name: "app_code_volume"
