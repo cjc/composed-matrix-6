@@ -1,3 +1,3 @@
 FROM tianon/true
 
-COPY . /app
+COPY ./matrix /app
