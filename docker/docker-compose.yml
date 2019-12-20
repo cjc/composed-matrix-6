@@ -22,6 +22,16 @@ services:
     environment:
       PS1: "\\u@\\h:\\w\\$$ "
 
+
+  db:
+    build:
+      context: "./db"
+    restart: always
+      environment:
+       - DB_USER=qqq
+    ports:
+     - 5433:5432
+
   my_php:
     build:
       context: "./php"
