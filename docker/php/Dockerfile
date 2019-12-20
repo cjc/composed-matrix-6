@@ -10,7 +10,7 @@ COPY db.inc /db.inc
 
 #Install Matrix prereqs https://matrix.squiz.net/resources/requirements
 RUN apt update
-RUN apt install -y libxslt1-dev libpq-dev libpng-dev libpspell-dev libldap2-dev
+RUN apt install -y libxslt1-dev libpq-dev libpng-dev libpspell-dev libldap2-dev sudo ssh
 
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql
