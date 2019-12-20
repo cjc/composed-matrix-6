@@ -32,7 +32,7 @@ location /__data {
 		fastcgi_split_path_info ^/__data/(.*)(.*);
 		fastcgi_pass $fcgi_path;
 		fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-		include fastcgi-params;
+		include fastcgi_params;
 	}
 }
 
@@ -45,7 +45,7 @@ location /__fudge {
 		fastcgi_split_path_info ^/__fudge/(.*)(.*);
 		fastcgi_pass $fcgi_path;
 		fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-		include fastcgi-params;
+		include fastcgi_params;
 	}
 }
 location /__lib {
@@ -60,14 +60,14 @@ location /__lib {
 #		fastcgi_split_path_info ^/__lib/(.*)(.*);
 #		fastcgi_pass $fcgi_path;
 #		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-#		include fastcgi-params;
+#		include fastcgi_params;
 #	}
 	location ~ \.php$ {
 		expires off;
 		fastcgi_split_path_info ^/__lib/(.*)(.*);
 		fastcgi_pass $fcgi_path;
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		include fastcgi-params;
+		include fastcgi_params;
 	}
 }
 
@@ -79,7 +79,7 @@ location /__trinity/authsession.php {
 	fastcgi_split_path_info ^/__trinity/(.*)(.*);
 	fastcgi_pass $fcgi_path;
 	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-	include fastcgi-params;
+	include fastcgi_params;
 }
 
 # Pass everything else to matrix handler
@@ -87,13 +87,13 @@ location / {
 	fastcgi_read_timeout 120s;
 	fastcgi_pass $fcgi_path;
 	fastcgi_param SCRIPT_FILENAME $document_root/core/web/index.php$fastcgi_script_name;
-	include fastcgi-params;
+	include fastcgi_params;
 }
 location @matrix {
 	fastcgi_read_timeout 120s;
 	fastcgi_pass $fcgi_path;
 	fastcgi_param SCRIPT_FILENAME $document_root/core/web/index.php$fastcgi_script_name;
-	include fastcgi-params;
+	include fastcgi_params;
 }
 
 # deny .inc, .git, .FFV and CVS
