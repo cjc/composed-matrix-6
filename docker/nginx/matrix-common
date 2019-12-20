@@ -1,0 +1,106 @@
+# Push 404's to the matrix handler, this means static 404's in __data are handled by matrix too
+error_page 404 = @matrix;
+
+# Redirect server error pages to the static page /50x.html
+#error_page 500 502 503 504  /50x.html;
+#location = /50x.html {
+#	 root /usr/share/nginx/html;
+#}
+
+# don't allow access to php status from the web
+location /__status {
+	# this is to override the @matrix 404 handling above (which would just render the php status)
+	error_page 404 = /__404;
+	return 404;
+}
+location /__404 {
+	# this turns on the internal nginx 404 handler because we can't let php see this request at all
+	internal;
+}
+
+# Just serve data files
+location /__data {
+	alias $matrix_root/data/public/;
+	expires 30d;
+
+	# Ensure that browsers don't guess filetypes
+	add_header X-Content-Type-Options nosniff;
+
+	# There are php scripts in here too...
+	location ~ asset_types/.*\.php$ {
+		expires off;
+		fastcgi_split_path_info ^/__data/(.*)(.*);
+		fastcgi_pass $fcgi_path;
+		fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+		include fastcgi-params;
+	}
+}
+
+# Fudge and lib contain some php scripts, annoying.
+location /__fudge {
+	alias $matrix_root/fudge/;
+	expires 30d;
+	location ~ \.php$ {
+		expires off;
+		fastcgi_split_path_info ^/__fudge/(.*)(.*);
+		fastcgi_pass $fcgi_path;
+		fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+		include fastcgi-params;
+	}
+}
+location /__lib {
+	alias $matrix_root/core/lib/;
+	expires 30d;
+	# uncomment specific test_message\.php location  if you are seeing 499 from nginx when test_message.php 
+	# is used as a healthcheck by a load balancer. "fastcgi_ignore_client_abort on" should help with 499 code
+	# You may also need to set "half_closed_clients on" in squid config if there is a loadbalancer in front of squid nodes
+#	location ~ test_message\.php$ {		
+#		fastcgi_ignore_client_abort on; 
+#		expires off;
+#		fastcgi_split_path_info ^/__lib/(.*)(.*);
+#		fastcgi_pass $fcgi_path;
+#		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+#		include fastcgi-params;
+#	}
+	location ~ \.php$ {
+		expires off;
+		fastcgi_split_path_info ^/__lib/(.*)(.*);
+		fastcgi_pass $fcgi_path;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		include fastcgi-params;
+	}
+}
+
+# trinity session information
+location /__trinity/authsession.php {
+	alias $matrix_root/core/lib/edge/;
+
+	expires -1;
+	fastcgi_split_path_info ^/__trinity/(.*)(.*);
+	fastcgi_pass $fcgi_path;
+	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	include fastcgi-params;
+}
+
+# Pass everything else to matrix handler
+location / {
+	fastcgi_read_timeout 120s;
+	fastcgi_pass $fcgi_path;
+	fastcgi_param SCRIPT_FILENAME $document_root/core/web/index.php$fastcgi_script_name;
+	include fastcgi-params;
+}
+location @matrix {
+	fastcgi_read_timeout 120s;
+	fastcgi_pass $fcgi_path;
+	fastcgi_param SCRIPT_FILENAME $document_root/core/web/index.php$fastcgi_script_name;
+	include fastcgi-params;
+}
+
+# deny .inc, .git, .FFV and CVS
+location ~ \.inc$ {
+	deny all;
+}
+location ~ /(CVS|\.FFV|\.git)/ {
+	deny all;
+}
+

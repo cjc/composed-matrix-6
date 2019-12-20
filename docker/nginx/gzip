@@ -1,0 +1,26 @@
+gzip on;
+gzip_vary on;
+gzip_proxied any;
+gzip_disable "msie6";
+gzip_http_version 1.0;
+gzip_min_length 256;
+gzip_comp_level 5;
+gzip_types 
+	application/x-javascript 
+	text/javascript 
+	text/css 
+	application/pdf
+	text/plain
+	application/json
+	text/xml
+	application/atom+xml
+	application/rss+xml
+	application/xhtml+xml
+	application/xml
+	application/vnd.ms-fontobject
+	application/x-font-ttf
+	font/opentype
+	image/bmp
+	image/svg+xml
+	"application/json; encoding=utf-8"
+	image/x-icon;
