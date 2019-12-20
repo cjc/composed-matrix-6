@@ -1,4 +1,7 @@
 #!/bin/bash
+echo 'Copying Matrix source to volume'
+cp -R /src/* /app/
+
 echo 'Installing';
 php /app/install/step_01.php /app
 

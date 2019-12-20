@@ -7,7 +7,7 @@ services:
       context: "./nginx"
     hostname: "my-nginx"
     ports:
-     - "80:80"
+            - "${HTTP_PORT:-80}:80"
     volumes:
      - "app_code:/app"
     depends_on:
@@ -22,15 +22,12 @@ services:
     restart: always
     environment:
      - DB_PASS=qqq
-#    ports:
-#     - 5433:5432
     volumes:
       - db_data:/var/lib/postgresql/data
 
   my_php:
     build:
       context: "./php"
-      #dockerfile: "docker/php/Dockerfile"
     hostname: "my-php"
     volumes:
      - "app_code:/app"

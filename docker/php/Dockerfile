@@ -15,10 +15,10 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
 RUN docker-php-ext-install xsl gd pspell intl ldap soap
 
 #Copy matrix source into webroot
-COPY matrix /app
+COPY matrix /src
 
 #Copy preconfigured db config file and install script
-COPY startup.sh /startup.sh
+COPY install.sh /install.sh
 COPY db.inc /db.inc
 
 CMD ["php-fpm", "--nodaemonize"]
