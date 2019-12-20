@@ -9,17 +9,6 @@ services:
     volumes:
      - "app_code:/app"
 
-  my_php:
-    build:
-      context: "./php"
-    hostname: "my-php"
-    volumes:
-     - "app_code:/app"
-    depends_on:
-     - "my_app"
-    environment:
-      PS1: "\\u@\\h:\\w\\$$ "
-
   my_nginx:
     build:
       context: "./nginx"
@@ -30,6 +19,17 @@ services:
      - "app_code:/app"
     depends_on:
      - "my_php"
+    environment:
+      PS1: "\\u@\\h:\\w\\$$ "
+
+  my_php:
+    build:
+      context: "./php"
+    hostname: "my-php"
+    volumes:
+     - "app_code:/app"
+    depends_on:
+     - "my_app"
     environment:
       PS1: "\\u@\\h:\\w\\$$ "
 
