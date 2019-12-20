@@ -2,13 +2,6 @@ version: "3.4"
 
 services:
 
-  my_app:
-    build:
-      context: ".."
-      dockerfile: "docker/source/Dockerfile"
-    volumes:
-     - "app_code:/app"
-
   my_nginx:
     build:
       context: "./nginx"
@@ -27,10 +20,12 @@ services:
     build:
       context: "./db"
     restart: always
-      environment:
-       - DB_USER=qqq
+    environment:
+     - DB_USER=qqq
     ports:
      - 5433:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
 
   my_php:
     build:
@@ -43,6 +38,15 @@ services:
     environment:
       PS1: "\\u@\\h:\\w\\$$ "
 
+  my_app:
+    build:
+      context: ".."
+      dockerfile: "docker/source/Dockerfile"
+    volumes:
+     - "app_code:/app"
+
 volumes:
   app_code:
     name: "app_code_volume"
+  db_data:
+    name: "db_data_volume"
