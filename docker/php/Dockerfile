@@ -21,5 +21,5 @@ COPY matrix /src
 COPY install.sh /install.sh
 COPY db.inc /db.inc
 
-CMD ["php-fpm", "--nodaemonize"]
-#ENTRYPOINT ["/startup.sh"]
+#CMD ["php-fpm", "--nodaemonize"]
+ENTRYPOINT ["/install.sh"]

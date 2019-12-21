@@ -2,6 +2,31 @@ version: "3.4"
 
 services:
 
+  db:
+    build:
+      context: "./db"
+    restart: always
+    environment:
+     - DB_PASS=qqq
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  php:
+    build:
+      context: "./php"
+    hostname: "cm_php"
+    volumes:
+     - "app_code:/app"
+    depends_on:
+     - "db"
+    environment:
+      PS1: "\\u@\\h:\\w\\$$ "
+
   nginx:
     build:
       context: "./nginx"
@@ -12,25 +37,6 @@ services:
      - "app_code:/app"
     depends_on:
      - "php"
-    environment:
-      PS1: "\\u@\\h:\\w\\$$ "
-
-
-  db:
-    build:
-      context: "./db"
-    restart: always
-    environment:
-     - DB_PASS=qqq
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-  php:
-    build:
-      context: "./php"
-    hostname: "cm_php"
-    volumes:
-     - "app_code:/app"
     environment:
       PS1: "\\u@\\h:\\w\\$$ "
 
