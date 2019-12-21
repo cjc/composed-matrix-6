@@ -36,6 +36,4 @@ services:
 
 volumes:
   app_code:
-    name: "app_code_volume"
   db_data:
-    name: "db_data_volume"
