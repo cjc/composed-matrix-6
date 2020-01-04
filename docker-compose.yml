@@ -25,7 +25,7 @@ services:
     depends_on:
      - "db"
     environment:
-      PS1: "\\u@\\h:\\w\\$$ "
+     - MATRIX_URL
 
   nginx:
     build:
