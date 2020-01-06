@@ -14,6 +14,10 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 RUN docker-php-ext-install xsl gd pspell intl ldap soap
 
+RUN pecl install -o -f redis \
+&&  rm -rf /tmp/pear \
+&&  echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
+
 #Copy matrix source into webroot
 COPY matrix /src
 
