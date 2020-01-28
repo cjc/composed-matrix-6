@@ -24,6 +24,7 @@ COPY matrix /src
 #Copy preconfigured db config file and install script
 COPY install.sh /install.sh
 COPY db.inc /db.inc
+COPY initialise.php /initialise.php
 
 #CMD ["php-fpm", "--nodaemonize"]
 ENTRYPOINT ["/install.sh"]

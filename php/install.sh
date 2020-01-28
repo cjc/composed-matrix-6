@@ -16,7 +16,9 @@ else
   chown -R www-data:www-data /app
   cp /db.inc /app/data/private/conf/
 
-  sed -i "s/^.*SQ_CONF_SYSTEM_ROOT_URLS',[ ]*'');/define('SQ_CONF_SYSTEM_ROOT_URLS', '"$MATRIX_URL"');/" /app/data/private/conf/main.inc
+  cp /initialise.php /app/initialise.php
+
+  sudo -u www-data php /app/initialise.php $MATRIX_URL
 
   sudo -u www-data php /app/install/step_02.php /app/
   sudo -u www-data php /app/install/step_03.php /app/
