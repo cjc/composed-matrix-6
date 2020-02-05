@@ -19,7 +19,8 @@ RUN pecl install -o -f redis \
 &&  echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
 
 #Copy matrix source into webroot
-COPY matrix /src
+COPY src /src
+
 
 #Copy preconfigured db config file and install script
 COPY install.sh /install.sh

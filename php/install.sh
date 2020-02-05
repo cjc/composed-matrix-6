@@ -8,7 +8,8 @@ else
   echo "Waiting 5 seconds to give postgres a chance to come up because docker-compose healthcheck appears to not actually work"
   sleep 5
   echo 'Copying Matrix source to volume'
-  cp -R /src/* /app/
+  tar -xzf /src/matrix*.tgz -C /app/
+  find /src/packages/*.tgz -exec tar -xzf {} -C /app/ \;
 
   echo 'Installing';
   php /app/install/step_01.php /app
