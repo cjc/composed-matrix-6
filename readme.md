@@ -1,5 +1,9 @@
 # docker-compose config for Squiz Matrix CMS
 
+## Disclaimer
+
+This fairly shonky and intended for internal test and dev servers only. Do not use in production.
+
 ## What is it?
 
 A docker-compose configuration to quickly run up an instance of Squiz Matrix CMS:
