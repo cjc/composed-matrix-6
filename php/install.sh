@@ -11,6 +11,16 @@ else
   tar -xzf /src/matrix*.tgz -C /app/
   find /src/packages/*.tgz -exec tar -xzf {} -C /app/ \;
 
+  rm -rf /app/packages/bulkmail
+  rm -rf /app/packages/ecommerce
+  rm -rf /app/packages/ldap
+  rm -rf /app/packages/marketo
+  rm -rf /app/packages/sharepoint
+  rm -rf /app/packages/sugar
+  rm -rf /app/packages/trim
+
+  sed -i '/bmail/d' /app/core/include/backend_common.inc
+
   echo 'Installing';
   php /app/install/step_01.php /app
 
