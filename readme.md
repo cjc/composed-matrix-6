@@ -38,13 +38,27 @@ docker-compose logs -f
 lynx 127.0.0.1:81/_admin
 ```
 
+## Application code
+
+This repo doesn't contain the code for Matirx, you need to download it and any extensions you want.
+
+An example of a populated `php/src` folder
+
+```
+php/src/matrix-5-5-5-1.tgz
+php/src/packages/json_web_token.tgz
+php/src/packages/dropinapps_connector-1.0.3.tgz
+php/src/packages/data_search.tgz
+php/src/packages/content_api.tgz
+```
+
+## Extension support
+
+Matrix extensions from https://marketplace.squiz.net/extensions can be installed by dropping the tgz file into `php/src/packages`. Tested with Content API and JSON Web Token.
+
 ## Containers
 
 * webserver - based on `nginx`
 * application - based on `gytist/php-fpm-v8js`
 * database - based on `postgres:latest`
 * session storage - `redis`
-
-## Extension support
-
-Matrix extensions from https://marketplace.squiz.net/extensions can be installed by dropping the tgz file into `php/src/packages`. Tested with Content API and JSON Web Token.
