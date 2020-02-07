@@ -18,6 +18,8 @@ RUN pecl install -o -f redis \
 &&  rm -rf /tmp/pear \
 &&  echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
 
+RUN docker-php-ext-install pcntl
+
 #Copy matrix source into webroot
 COPY src /src
 
