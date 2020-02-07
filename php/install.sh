@@ -9,8 +9,8 @@ else
   sleep 5
   echo 'Copying Matrix source to volume'
   tar -xzf /src/matrix*.tgz -C /app/
-  find /src/packages/*.tgz -exec tar -xzf {} -C /app/ \;
 
+  #Remove exotic and extraneous packages that most people don't use. Comment out any lines you want to keep
   rm -rf /app/packages/bulkmail
   rm -rf /app/packages/ecommerce
   rm -rf /app/packages/ldap
@@ -19,7 +19,11 @@ else
   rm -rf /app/packages/sugar
   rm -rf /app/packages/trim
 
+  #Hacky fix - remove two references in core to the bulkmail package to prevent errors caused by not installing bulkmail
   sed -i '/bmail/d' /app/core/include/backend_common.inc
+
+  #Extract all supplied extensions prior to installation
+  find /src/packages/*.tgz -exec tar -xzf {} -C /app/ \;
 
   echo 'Installing';
   php /app/install/step_01.php /app
