@@ -16,7 +16,7 @@ else
   rm -rf /app/packages/ldap
   rm -rf /app/packages/marketo
   rm -rf /app/packages/sharepoint
-  rm -rf /app/packages/sugar
+  #rm -rf /app/packages/sugar
   rm -rf /app/packages/trim
 
   #Hacky fix - remove two references in core to the bulkmail package to prevent errors caused by not installing bulkmail
