@@ -19,7 +19,7 @@ A docker-compose configuration to quickly run up an instance of Squiz Matrix CMS
   * ldap
   * marketo
   * sharepoint
-  * sugar
+  * ~~sugar~~ (Not removed anymore because User has a hard dependency on it :disappointed:)
   * trim
  
 ## tl;dr
