@@ -8,7 +8,7 @@ This fairly shonky and intended for internal test and dev servers only. Do not u
 
 A docker-compose configuration to quickly run up an instance of Squiz Matrix CMS:
 
-* Suports Matrix 5.5.3.0+ (last tested with 5.5.5.1)
+* Suports Matrix 5.5.3.0+ (last tested with 5.5.6.0)
 * PHP 7.3 with V8js support
 * Postgres DB container
 * Redis session storage
