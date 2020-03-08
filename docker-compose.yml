@@ -32,6 +32,7 @@ services:
      - "db"
     environment:
      - MATRIX_URL
+     - FILE_BRIDGE_PATH
 
   nginx:
     build:

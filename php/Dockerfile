@@ -23,6 +23,7 @@ RUN docker-php-ext-install pcntl
 #Copy matrix source into webroot
 COPY src /src
 
+COPY public /public
 
 #Copy preconfigured db config file and install script
 COPY install.sh /install.sh

@@ -38,6 +38,9 @@ else
   sudo -u www-data php /app/install/step_02.php /app/
   sudo -u www-data php /app/install/step_03.php /app/
 
+  echo "<?php define('FILE_BRIDGE_PATH', SQ_DATA_PATH.'$FILE_BRIDGE_PATH');?>" > data/private/conf/file_bridge.inc
+  cp -r /public/* /app/data/public/
+
   grep "SQ_CONF_SYSTEM_ROOT_URLS" /app/data/private/conf/main.inc
 
 fi
