@@ -46,6 +46,10 @@ services:
      - "php"
     environment:
       PS1: "\\u@\\h:\\w\\$$ "
+    networks:
+      default:
+        aliases:
+         - ${MATRIX_URL}      
 
 volumes:
   app_code:
