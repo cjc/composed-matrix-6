@@ -8,6 +8,7 @@ services:
     restart: always
     environment:
      - DB_PASS=qqq
+     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
     healthcheck:

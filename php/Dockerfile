@@ -1,5 +1,4 @@
-#FROM php:7.2.13-fpm-alpine3.8
-FROM gytist/php-fpm-v8js
+FROM nkahoang/docker-v8js-php:php7.3-fpm-v8js7.9
 
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 

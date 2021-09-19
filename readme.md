@@ -31,6 +31,7 @@ cd compose-matrix
 #set up environment variables for port and domain
 echo HTTP_PORT=81 > .env
 echo MATRIX_URL=127.0.0.1:81 >> .env
+echo POSTGRES_PASSWORD=madeup >> .env
 
 #download Matrix source tgz to php/src/
 lynx https://matrix.squiz.net/releases/vm
