@@ -2,7 +2,7 @@
 
 ## Disclaimer
 
-This fairly shonky and intended for internal test and dev servers only. Do not use in production. This repo is for Squiz Matrix 6. For 5.5 use https://github.com/cjc/composed-matrix-6
+This fairly shonky and intended for internal test and dev servers only. Do not use in production. This repo is for Squiz Matrix 6. For 5.5 use https://github.com/cjc/composed-matrix
 
 ## What is it?
 
@@ -27,29 +27,9 @@ A docker-compose configuration to quickly run up an instance of Squiz Matrix CMS
 ```bash
 git clone git@github.com:cjc/composed-matrix-6.git
 
-wget https://matrix.squiz.net/__data/assets/file/0030/37965/matrix-6.15.0.tgz
-mkdir source
-tar -xzf matrix-6.15.0.tgz -C source/
+cd composed-matrix-6
 
-cd source/
-npm install
-npm run build
-cd ..
-
-#copy the built source into the docker-compose set up, then delete the node_modules folder before building the images
-cp -R source/ composed-matrix-6/php/src/
-rm -rf composed-matrix-6/php/src/source/node_modules/
-
-cd compose-matrix-6
-
-#set up environment variables for domain and postgres password (required)
-echo MATRIX_URL=`ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'` > .env
-echo POSTGRES_PASSWORD=madeup >> .env
-
-docker-compose up -d
-docker-compose logs -f
-
-#Wait for installation to complete, should see "NOTICE: ready to handle connections"
+./tldr.sh
 ```
 
 ## Application code
