@@ -26,31 +26,40 @@ A docker-compose configuration to quickly run up an instance of Squiz Matrix CMS
  
 ```bash
 git clone git@github.com:cjc/composed-matrix-6.git
-cd compose-matrix
 
-#set up environment variables for port and domain
-echo HTTP_PORT=81 > .env #defaults to 80
-echo MATRIX_URL=127.0.0.1:81 >> .env #can be blank
-echo POSTGRES_PASSWORD=madeup >> .env #required
+wget https://matrix.squiz.net/__data/assets/file/0030/37965/matrix-6.15.0.tgz
+mkdir source
+tar -xzf matrix-6.15.0.tgz -C source/
 
-#download Matrix source tgz to php/src/
-lynx https://matrix.squiz.net/releases/vm
+cd source/
+npm install
+npm run build
+cd ..
+
+#copy the built source into the docker-compose set up, then delete the node_modules folder before building the images
+cp -R source/ composed-matrix-6/php/src/
+rm -rf composed-matrix-6/php/src/source/node_modules/
+
+cd compose-matrix-6
+
+#set up environment variables for domain and postgres password (required)
+echo MATRIX_URL=`ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'` > .env
+echo POSTGRES_PASSWORD=madeup >> .env
 
 docker-compose up -d
 docker-compose logs -f
 
 #Wait for installation to complete, should see "NOTICE: ready to handle connections"
-lynx 127.0.0.1:81/_admin
 ```
 
 ## Application code
 
 This repo doesn't contain the code for Matirx, you need to download it and any extensions you want.
 
-An example of a populated `php/src` folder
+For version 6 you'll need to extract and run `npm install && npm run build`
 
 ```
-~~php/src/matrix-5-5-5-1.tgz~~
+php/src/source/...
 php/src/packages/json_web_token.tgz
 php/src/packages/dropinapps_connector-1.0.3.tgz
 php/src/packages/data_search.tgz
@@ -64,6 +73,6 @@ Matrix extensions from https://marketplace.squiz.net/extensions can be installed
 ## Containers
 
 * webserver - based on `nginx`
-* application - based on `gytist/php-fpm-v8js`
+* application - based on `nkahoang/docker-v8js-php:php7.3-fpm-v8js7.9`
 * database - based on `postgres:latest`
 * session storage - `redis`
