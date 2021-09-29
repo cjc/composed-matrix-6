@@ -1,14 +1,14 @@
-# docker-compose config for Squiz Matrix CMS
+# docker-compose config for Squiz Matrix CMS version 6
 
 ## Disclaimer
 
-This fairly shonky and intended for internal test and dev servers only. Do not use in production.
+This fairly shonky and intended for internal test and dev servers only. Do not use in production. This repo is for Squiz Matrix 6. For 5.5 use https://github.com/cjc/composed-matrix-6
 
 ## What is it?
 
 A docker-compose configuration to quickly run up an instance of Squiz Matrix CMS:
 
-* Suports Matrix 5.5.3.0+ (last tested with 5.5.6.0)
+* Suports Matrix 6.15+ (last tested with 6.15)
 * PHP 7.3 with V8js support
 * Postgres DB container
 * Redis session storage
@@ -16,7 +16,7 @@ A docker-compose configuration to quickly run up an instance of Squiz Matrix CMS
 * Cut down "core" Matrix with old extensions removed
   * bulkmail
   * ecommerce
-  * ldap
+  * ~~ldap~~ (Not removed for V6 because the new `application_monitoring` package depends on it
   * marketo
   * sharepoint
   * ~~sugar~~ (Not removed anymore because User has a hard dependency on it :disappointed:)
@@ -25,7 +25,7 @@ A docker-compose configuration to quickly run up an instance of Squiz Matrix CMS
 ## tl;dr
  
 ```bash
-git clone git@github.com:cjc/composed-matrix.git
+git clone git@github.com:cjc/composed-matrix-6.git
 cd compose-matrix
 
 #set up environment variables for port and domain
@@ -50,7 +50,7 @@ This repo doesn't contain the code for Matirx, you need to download it and any e
 An example of a populated `php/src` folder
 
 ```
-php/src/matrix-5-5-5-1.tgz
+~~php/src/matrix-5-5-5-1.tgz~~
 php/src/packages/json_web_token.tgz
 php/src/packages/dropinapps_connector-1.0.3.tgz
 php/src/packages/data_search.tgz
