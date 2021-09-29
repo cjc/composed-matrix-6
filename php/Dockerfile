@@ -7,7 +7,7 @@ WORKDIR /app
 
 #Install Matrix prereqs https://matrix.squiz.net/resources/requirements
 RUN apt update
-RUN apt install -y libxslt1-dev libpq-dev libpng-dev libpspell-dev libldap2-dev sudo ssh
+RUN apt install -y libxslt1-dev libpq-dev libpng-dev libpspell-dev libldap2-dev sudo ssh uuid-dev
 
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql
@@ -16,6 +16,10 @@ RUN docker-php-ext-install xsl gd pspell intl ldap soap
 RUN pecl install -o -f redis \
 &&  rm -rf /tmp/pear \
 &&  echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
+
+RUN pecl install -o -f uuid \
+&&  rm -rf /tmp/pear \
+&&  echo "extension=uuid.so" > /usr/local/etc/php/conf.d/uuid.ini
 
 RUN docker-php-ext-install pcntl
 
